@@ -11,7 +11,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'], // or specify ['http://localhost:52417', 'http://localhost:52418'] for Flutter web
 
     'allowed_origins_patterns' => [],
 
@@ -21,5 +21,5 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true, // Changed to true
 ];
