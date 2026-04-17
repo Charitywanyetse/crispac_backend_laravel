@@ -21,9 +21,14 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => [                        // <-- nest token inside data
+                'data' => [
                     'token' => $token,
-                    'user' => $user,
+                    'user' => [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'role' => $user->role,
+                    ],
                 ],
             ]);
         }
@@ -36,6 +41,11 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Logged out']);
+        return response()->json(['message' => 'Logged out successfully']);
+    }
+
+    public function user(Request $request)
+    {
+        return response()->json($request->user());
     }
 }
