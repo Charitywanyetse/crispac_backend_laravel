@@ -1,9 +1,5 @@
 <?php
 
-Route::get('/test', function() {
-    return response()->json(['message' => 'API is working!']);
-});
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
@@ -11,21 +7,24 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\VerificationController;
+use App\Http\Controllers\Api\StatsController;
 
+// ============= PUBLIC ROUTES (No authentication required) =============
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/send-verification', [VerificationController::class, 'sendCode']);
+Route::post('/verify-code', [VerificationController::class, 'verifyCode']);
 
+// Test route
 Route::get('/test', function() {
     return response()->json(['message' => 'API is working!']);
 });
 
-// Public routes
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/send-verification', [VerificationController::class, 'sendCode']);
-Route::post('/verify-code', [VerificationController::class, 'verifyCode']);
-
-// Protected routes (require authentication)
+// ============= PROTECTED ROUTES (Authentication required) =============
 Route::middleware('auth:sanctum')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/stats', [StatsController::class, 'index']);
     
     // Orders
     Route::get('/orders', [OrderController::class, 'index']);

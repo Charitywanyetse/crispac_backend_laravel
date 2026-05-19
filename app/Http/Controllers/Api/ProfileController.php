@@ -5,21 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProfileController extends Controller
 {
-    public function index()
+    public function show(Request $request)
     {
         return response()->json([
             'status' => 'success',
-            'data' => []
+            'data' => $request->user()
         ]);
     }
 
-    public function show($id)
+    public function update(Request $request)
     {
         return response()->json([
             'status' => 'success',
-            'data' => []
+            'message' => 'Profile updated successfully'
         ]);
     }
 }
